@@ -1,0 +1,49 @@
+{
+    "name": "thebachtiarz-company/laravel-eav-v1",
+    "description": "A Library for handle EAV for Laravel Project v1",
+    "type": "library",
+    "version": "1.0.0",
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^10.11",
+        "thebachtiarz-company/laravel-base-v1": "^1.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "TheBachtiarz\\EAV\\": "src/"
+        },
+        "files": [
+            "helper/helper.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "thebachtiarz-company",
+            "email": "thebachtiarz.company@gmail.com"
+        }
+    ],
+    "keywords": [
+        "laravel",
+        "thebachtiarz",
+        "eav",
+        "attribute"
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TheBachtiarz\\EAV\\ServiceProvider"
+            ]
+        }
+    },
+    "homepage": "https://github.com/thebachtiarz-company/laravel-eav-v1",
+    "support": {
+        "issues": "https://github.com/thebachtiarz-company/laravel-eav-v1/issues",
+        "source": "https://github.com/thebachtiarz-company/laravel-eav-v1"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
