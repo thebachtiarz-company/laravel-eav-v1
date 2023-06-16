@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create(EavEntityInterface::TABLE_NAME, function (Blueprint $table) {
             $table->id();
-            $table->string(EavEntityInterface::ATTRIBUTE_ENTITY)->nullable(false);
+            $table->string(EavEntityInterface::ATTRIBUTE_ENTITY)->nullable(false)->index();
             $table->unsignedBigInteger(EavEntityInterface::ATTRIBUTE_ENTITYID)->nullable(false);
             $table->string(EavEntityInterface::ATTRIBUTE_NAME)->nullable(false);
             $table->text(EavEntityInterface::ATTRIBUTE_VALUE);

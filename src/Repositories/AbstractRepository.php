@@ -9,7 +9,6 @@ use TheBachtiarz\Base\App\Interfaces\Model\AbstractModelInterface;
 use TheBachtiarz\Base\App\Repositories\AbstractRepository as BaseAbstractRepository;
 use TheBachtiarz\EAV\Traits\Service\EavMutatorTrait;
 
-use function array_keys;
 use function collect;
 use function in_array;
 use function tbgetcolumnstablefrommodel;
@@ -17,6 +16,11 @@ use function tbgetcolumnstablefrommodel;
 abstract class AbstractRepository extends BaseAbstractRepository
 {
     use EavMutatorTrait;
+
+    /**
+     * Set result entity using eav
+     */
+    protected bool $withEav = true;
 
     protected function createFromModel(Model $model): Model
     {
@@ -57,8 +61,10 @@ abstract class AbstractRepository extends BaseAbstractRepository
      */
     protected function prepareEavCollection(Model|AbstractModelInterface $modelEntity): array
     {
+        $modelDescColumns = tbgetcolumnstablefrommodel($modelEntity);
+
         foreach ($modelEntity->toArray() as $attribute => $value) {
-            if (in_array($attribute, tbgetcolumnstablefrommodel($modelEntity))) {
+            if (in_array($attribute, $modelDescColumns)) {
                 continue;
             }
 
@@ -75,8 +81,18 @@ abstract class AbstractRepository extends BaseAbstractRepository
     {
         $this->prepareCreate($modelEntity);
         $this->createOrUpdateEavFromModel($modelEntity);
-        $modelEntity->makeHidden(array_keys($this->modelExtensionAttributes));
+        $this->modelData[$modelEntity->getKeyName()] = $modelEntity->getAttributeValue($modelEntity->getKeyName());
 
-        return $modelEntity->setRawAttributes($modelEntity->toArray());
+        return $modelEntity->setRawAttributes($this->modelData);
+    }
+
+    /**
+     * Set with eav
+     */
+    public function withEav(bool $withEav = true): static
+    {
+        $this->withEav = $withEav;
+
+        return $this;
     }
 }

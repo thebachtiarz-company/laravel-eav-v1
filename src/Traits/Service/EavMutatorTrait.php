@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TheBachtiarz\EAV\Traits\Service;
 
+use Illuminate\Support\Str;
 use TheBachtiarz\Base\App\Interfaces\Model\AbstractModelInterface;
 use TheBachtiarz\Base\App\Libraries\Log\LogLibrary;
 use TheBachtiarz\EAV\Interfaces\Model\EavEntityInterface;
@@ -35,6 +36,8 @@ trait EavMutatorTrait
         mixed $attributeValue,
     ): bool {
         try {
+            $attributeName = Str::slug(title: $attributeName, separator: '_');
+
             $eavEntityRepository = app(EavEntityRepository::class);
             assert($eavEntityRepository instanceof EavEntityRepository);
 
