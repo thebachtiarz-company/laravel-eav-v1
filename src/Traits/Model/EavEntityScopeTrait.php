@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace TheBachtiarz\EAV\Traits\Model;
 
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Database\Query\Builder as BuilderContract;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use TheBachtiarz\EAV\Interfaces\Model\EavEntityInterface;
 
 /**
@@ -15,24 +17,30 @@ trait EavEntityScopeTrait
     /**
      * Get by entity name
      */
-    public function scopeGetByEntityName(Builder $builder, string $entityName): Builder
-    {
+    public function scopeGetByEntityName(
+        EloquentBuilder|QueryBuilder $builder,
+        string $entityName,
+    ): BuilderContract {
         return $builder->where(EavEntityInterface::ATTRIBUTE_ENTITY, $entityName);
     }
 
     /**
      * Get by entity id
      */
-    public function scopeGetByEntityId(Builder $builder, int $entityId): Builder
-    {
+    public function scopeGetByEntityId(
+        EloquentBuilder|QueryBuilder $builder,
+        int $entityId,
+    ): BuilderContract {
         return $builder->where(EavEntityInterface::ATTRIBUTE_ENTITYID, $entityId);
     }
 
     /**
      * Get by attribute name
      */
-    public function scopeGetByAttributeName(Builder $builder, string $attributeName): Builder
-    {
+    public function scopeGetByAttributeName(
+        EloquentBuilder|QueryBuilder $builder,
+        string $attributeName,
+    ): BuilderContract {
         return $builder->where(EavEntityInterface::ATTRIBUTE_NAME, $attributeName);
     }
 
@@ -40,11 +48,11 @@ trait EavEntityScopeTrait
      * Search by entity attribute value
      */
     public function scopeSearchByEntityValue(
-        Builder $builder,
+        EloquentBuilder|QueryBuilder $builder,
         string $entityName,
         string $attributeName,
         string $attributeValue,
-    ): Builder {
+    ): BuilderContract {
         return $builder->where(EavEntityInterface::ATTRIBUTE_ENTITY, $entityName)
             ->where(EavEntityInterface::ATTRIBUTE_NAME, $attributeName)
             ->where(EavEntityInterface::ATTRIBUTE_VALUE, 'like', "%$attributeValue%");

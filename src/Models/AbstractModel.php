@@ -25,9 +25,9 @@ abstract class AbstractModel extends BaseAbstractModel
 
     public function __construct(array $attributes = [])
     {
-        parent::__construct($attributes);
-
         $this->restrictedEavattributes = tbgetcolumnstablefrommodel($this);
+
+        parent::__construct($attributes);
     }
 
     public function setData(string $attribute, mixed $value): static
