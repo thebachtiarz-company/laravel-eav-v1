@@ -11,7 +11,7 @@ use TheBachtiarz\EAV\Traits\Service\EavMutatorTrait;
 
 use function collect;
 use function in_array;
-use function tbgetcolumnstablefrommodel;
+use function tbgetmodelcolumns;
 
 abstract class AbstractRepository extends BaseAbstractRepository
 {
@@ -61,7 +61,7 @@ abstract class AbstractRepository extends BaseAbstractRepository
      */
     protected function prepareEavCollection(Model|AbstractModelInterface $modelEntity): array
     {
-        $modelDescColumns = tbgetcolumnstablefrommodel($modelEntity);
+        $modelDescColumns = tbgetmodelcolumns($modelEntity);
 
         foreach ($modelEntity->toArray() as $attribute => $value) {
             if (in_array($attribute, $modelDescColumns)) {

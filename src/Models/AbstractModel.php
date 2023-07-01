@@ -10,7 +10,7 @@ use TheBachtiarz\EAV\Services\EavAttributeService;
 
 use function in_array;
 use function sprintf;
-use function tbgetcolumnstablefrommodel;
+use function tbgetmodelcolumns;
 
 abstract class AbstractModel extends BaseAbstractModel
 {
@@ -25,7 +25,7 @@ abstract class AbstractModel extends BaseAbstractModel
 
     public function __construct(array $attributes = [])
     {
-        $this->restrictedEavattributes = tbgetcolumnstablefrommodel($this);
+        $this->restrictedEavattributes = tbgetmodelcolumns($this);
 
         parent::__construct($attributes);
     }

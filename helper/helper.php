@@ -20,15 +20,3 @@ if (! function_exists('tbeavconfig')) {
         return tbconfig($configName, $keyName, $useOrigin);
     }
 }
-
-if (! function_exists('tbgetcolumnstablefrommodel')) {
-    /**
-     * Get columns table from model
-     *
-     * @return array
-     */
-    function tbgetcolumnstablefrommodel(Model $model): array
-    {
-        return collect(Schema::getColumnListing($model->getTable()))->toArray();
-    }
-}
