@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace TheBachtiarz\EAV\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
-use TheBachtiarz\Base\App\Interfaces\Model\AbstractModelInterface;
+use TheBachtiarz\Base\App\Interfaces\Models\AbstractModelInterface;
 use TheBachtiarz\Base\App\Repositories\AbstractRepository as BaseAbstractRepository;
-use TheBachtiarz\EAV\Traits\Service\EavMutatorTrait;
+use TheBachtiarz\EAV\Interfaces\Repositories\AbstractRepositoryInterface;
+use TheBachtiarz\EAV\Traits\Services\EavMutatorTrait;
 
 use function collect;
 use function in_array;
 use function tbgetmodelcolumns;
 
-abstract class AbstractRepository extends BaseAbstractRepository
+abstract class AbstractRepository extends BaseAbstractRepository implements AbstractRepositoryInterface
 {
     use EavMutatorTrait;
 
@@ -22,7 +23,29 @@ abstract class AbstractRepository extends BaseAbstractRepository
      */
     protected bool $withEav = true;
 
-    protected function createFromModel(Model $model): Model
+    // ? Public Methods
+
+    /**
+     * Set is result with eav
+     *
+     * @param bool|null $withEav If null, it will return current value.
+     *
+     * @return static|bool
+     */
+    public function withEav(bool|null $withEav = null): static|bool
+    {
+        if ($withEav) {
+            $this->withEav = $withEav;
+
+            return $this;
+        }
+
+        return $this->withEav;
+    }
+
+    // ? Protected Methods
+
+    protected function createFromModel(Model|AbstractModelInterface $model): Model|AbstractModelInterface
     {
         $result = parent::createFromModel($model);
 
@@ -31,7 +54,7 @@ abstract class AbstractRepository extends BaseAbstractRepository
         return $result;
     }
 
-    protected function prepareCreate(Model $model): array
+    protected function prepareCreate(Model|AbstractModelInterface $model): array
     {
         $result = parent::prepareCreate($model);
 
@@ -86,13 +109,9 @@ abstract class AbstractRepository extends BaseAbstractRepository
         return $modelEntity->setRawAttributes($this->modelData);
     }
 
-    /**
-     * Set with eav
-     */
-    public function withEav(bool $withEav = true): static
-    {
-        $this->withEav = $withEav;
+    // ? Private Methods
 
-        return $this;
-    }
+    // ? Getter Modules
+
+    // ? Setter Modules
 }

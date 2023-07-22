@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace TheBachtiarz\EAV\Traits\Service;
+namespace TheBachtiarz\EAV\Traits\Services;
 
 use Illuminate\Support\Str;
-use TheBachtiarz\Base\App\Interfaces\Model\AbstractModelInterface;
+use TheBachtiarz\Base\App\Interfaces\Models\AbstractModelInterface;
 use TheBachtiarz\Base\App\Libraries\Log\LogLibrary;
-use TheBachtiarz\EAV\Interfaces\Model\EavEntityInterface;
+use TheBachtiarz\EAV\Interfaces\Models\EavEntityInterface;
 use TheBachtiarz\EAV\Models\EavEntity;
 use TheBachtiarz\EAV\Repositories\EavEntityRepository;
 use Throwable;

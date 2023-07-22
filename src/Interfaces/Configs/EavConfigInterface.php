@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TheBachtiarz\EAV\Interfaces\Config;
+namespace TheBachtiarz\EAV\Interfaces\Configs;
 
 interface EavConfigInterface
 {

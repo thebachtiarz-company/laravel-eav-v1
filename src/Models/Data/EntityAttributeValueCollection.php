@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace TheBachtiarz\EAV\Models\Data;
 
-use TheBachtiarz\EAV\Interfaces\Model\Data\EntityAttributeValueCollectionInterface;
+use TheBachtiarz\EAV\Interfaces\Models\Data\EntityAttributeValueCollectionInterface;
 
 class EntityAttributeValueCollection implements EntityAttributeValueCollectionInterface
 {

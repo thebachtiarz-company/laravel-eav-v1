@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace TheBachtiarz\EAV;
 
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
-use TheBachtiarz\EAV\Interfaces\Config\EavConfigInterface;
+use TheBachtiarz\EAV\Interfaces\Configs\EavConfigInterface;
 use TheBachtiarz\EAV\Providers\AppsProvider;
 
 use function app;

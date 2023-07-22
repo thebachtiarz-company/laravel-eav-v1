@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace TheBachtiarz\EAV\Services;
 
 use Illuminate\Database\Eloquent\Model;
-use TheBachtiarz\Base\App\Interfaces\Model\AbstractModelInterface;
-use TheBachtiarz\EAV\Interfaces\Model\Data\EntityAttributeValueCollectionInterface;
-use TheBachtiarz\EAV\Interfaces\Model\EavEntityInterface;
+use TheBachtiarz\Base\App\Interfaces\Models\AbstractModelInterface;
+use TheBachtiarz\EAV\Interfaces\Models\Data\EntityAttributeValueCollectionInterface;
+use TheBachtiarz\EAV\Interfaces\Models\EavEntityInterface;
 use TheBachtiarz\EAV\Models\Data\EntityAttributeValueCollection;
 use TheBachtiarz\EAV\Repositories\EavEntityRepository;
-use TheBachtiarz\EAV\Traits\Service\EavMutatorTrait;
+use TheBachtiarz\EAV\Traits\Services\EavMutatorTrait;
 
 use function app;
 use function assert;

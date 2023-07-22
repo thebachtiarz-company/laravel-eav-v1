@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use TheBachtiarz\Base\App\Interfaces\Model\AbstractModelInterface;
+use TheBachtiarz\Base\App\Interfaces\Models\AbstractModelInterface;
 use TheBachtiarz\Base\App\Repositories\AbstractRepository;
-use TheBachtiarz\EAV\Interfaces\Model\EavEntityInterface;
+use TheBachtiarz\EAV\Interfaces\Models\EavEntityInterface;
 use TheBachtiarz\EAV\Models\EavEntity;
 
 use function assert;
@@ -18,14 +18,6 @@ use function assert;
 class EavEntityRepository extends AbstractRepository
 {
     // ? Public Methods
-
-    /**
-     * Get by id
-     */
-    public function getById(int $id): EavEntityInterface|null
-    {
-        return EavEntity::find($id);
-    }
 
     /**
      * Get attributes in model
@@ -115,17 +107,6 @@ class EavEntityRepository extends AbstractRepository
     }
 
     /**
-     * Delete by id
-     */
-    public function deleteById(int $id): bool
-    {
-        $eavEntity = $this->getById($id);
-        assert($eavEntity instanceof Model);
-
-        return $eavEntity->delete();
-    }
-
-    /**
      * Delete attributes in entity
      */
     public function deleteAttributeEntity(AbstractModelInterface $abstractModelInterface): bool
@@ -143,4 +124,22 @@ class EavEntityRepository extends AbstractRepository
 
         return false;
     }
+
+    // ? Protected Methods
+
+    protected function getByIdErrorMessage(): string|null
+    {
+        return "Eav with id '%s' not found!";
+    }
+
+    protected function createOrUpdateErrorMessage(): string|null
+    {
+        return 'Failed to %s eav';
+    }
+
+    // ? Private Methods
+
+    // ? Getter Modules
+
+    // ? Setter Modules
 }

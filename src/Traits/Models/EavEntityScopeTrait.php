@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace TheBachtiarz\EAV\Traits\Model;
+namespace TheBachtiarz\EAV\Traits\Models;
 
 use Illuminate\Contracts\Database\Query\Builder as BuilderContract;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
-use TheBachtiarz\EAV\Interfaces\Model\EavEntityInterface;
+use TheBachtiarz\EAV\Interfaces\Models\EavEntityInterface;
 
 /**
  * Eav Entity Scope Trait

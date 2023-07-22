@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TheBachtiarz\EAV\Interfaces\Model\Data;
+namespace TheBachtiarz\EAV\Interfaces\Models\Data;
 
 interface EntityAttributeValueCollectionInterface
 {

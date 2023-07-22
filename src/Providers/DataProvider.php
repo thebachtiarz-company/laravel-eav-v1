@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace TheBachtiarz\EAV\Providers;
 
 use TheBachtiarz\Base\BaseConfigInterface;
-use TheBachtiarz\EAV\Interfaces\Config\EavConfigInterface;
+use TheBachtiarz\EAV\Interfaces\Configs\EavConfigInterface;
 
 use function array_merge;
 use function tbbaseconfig;

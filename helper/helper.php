@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Schema;
-use TheBachtiarz\EAV\Interfaces\Config\EavConfigInterface;
+use TheBachtiarz\EAV\Interfaces\Configs\EavConfigInterface;
 
 if (! function_exists('tbeavconfig')) {
     /**

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace TheBachtiarz\EAV\Models;
 
-use TheBachtiarz\Base\App\Interfaces\Model\AbstractModelInterface;
+use TheBachtiarz\Base\App\Interfaces\Models\AbstractModelInterface;
 use TheBachtiarz\Base\App\Models\AbstractModel;
-use TheBachtiarz\EAV\Interfaces\Model\EavEntityInterface;
-use TheBachtiarz\EAV\Traits\Model\EavEntityScopeTrait;
+use TheBachtiarz\EAV\Interfaces\Models\EavEntityInterface;
+use TheBachtiarz\EAV\Traits\Models\EavEntityScopeTrait;
 use Throwable;
 
 use function serialize;

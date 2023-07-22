@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace TheBachtiarz\EAV\Interfaces\Model;
+namespace TheBachtiarz\EAV\Interfaces\Models;
 
-use TheBachtiarz\Base\App\Interfaces\Model\AbstractModelInterface;
+use TheBachtiarz\Base\App\Interfaces\Models\AbstractModelInterface;
 
 interface EavEntityInterface extends AbstractModelInterface
 {
