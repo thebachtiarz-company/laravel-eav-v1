@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace TheBachtiarz\EAV\Repositories;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -13,10 +12,21 @@ use TheBachtiarz\Base\App\Repositories\AbstractRepository;
 use TheBachtiarz\EAV\Interfaces\Models\EavEntityInterface;
 use TheBachtiarz\EAV\Models\EavEntity;
 
+use function app;
 use function assert;
 
 class EavEntityRepository extends AbstractRepository
 {
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->modelEntity = app(EavEntity::class);
+
+        parent::__construct();
+    }
+
     // ? Public Methods
 
     /**
@@ -24,10 +34,9 @@ class EavEntityRepository extends AbstractRepository
      */
     public function getAttributesModel(AbstractModelInterface $abstractModelInterface): Collection
     {
-        $collection = EavEntity::getByEntityName($abstractModelInterface::class);
-        assert($collection instanceof Builder);
+        $this->modelBuilder(modelBuilder: EavEntity::getByEntityName($abstractModelInterface::class));
 
-        return $collection->get();
+        return $this->modelBuilder()->get();
     }
 
     /**
@@ -35,11 +44,12 @@ class EavEntityRepository extends AbstractRepository
      */
     public function getAttributesEntity(AbstractModelInterface $abstractModelInterface): Collection
     {
-        $collection = EavEntity::getByEntityName($abstractModelInterface::class)
-            ->getByEntityId($abstractModelInterface->getId());
-        assert($collection instanceof Builder);
+        $this->modelBuilder(
+            modelBuilder: EavEntity::getByEntityName($abstractModelInterface::class)
+                ->getByEntityId($abstractModelInterface->getId()),
+        );
 
-        return $collection->get();
+        return $this->modelBuilder()->get();
     }
 
     /**
@@ -50,14 +60,15 @@ class EavEntityRepository extends AbstractRepository
         string $attributeName,
         string $attributeValue,
     ): Collection {
-        $collection = EavEntity::searchByEntityValue(
-            $abstractModelInterface::class,
-            $attributeName,
-            $attributeValue,
+        $this->modelBuilder(
+            modelBuilder: EavEntity::searchByEntityValue(
+                $abstractModelInterface::class,
+                $attributeName,
+                $attributeValue,
+            ),
         );
-        assert($collection instanceof Builder);
 
-        return $collection->get();
+        return $this->modelBuilder()->get();
     }
 
     /**
@@ -67,12 +78,13 @@ class EavEntityRepository extends AbstractRepository
         AbstractModelInterface $abstractModelInterface,
         string $attributeName,
     ): EavEntityInterface|null {
-        $collection = EavEntity::getByEntityName($abstractModelInterface::class)
-            ->getByEntityId($abstractModelInterface->getId())
-            ->getByAttributeName($attributeName);
-        assert($collection instanceof Builder);
+        $this->modelBuilder(
+            modelBuilder: EavEntity::getByEntityName($abstractModelInterface::class)
+                ->getByEntityId($abstractModelInterface->getId())
+                ->getByAttributeName($attributeName),
+        );
 
-        return $collection->latest()->first();
+        return $this->modelBuilder()->latest()->first();
     }
 
     /**

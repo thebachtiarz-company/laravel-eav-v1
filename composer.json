@@ -2,11 +2,11 @@
     "name": "thebachtiarz-company/laravel-eav-v1",
     "description": "A Library for handle EAV for Laravel Project v1",
     "type": "library",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "require": {
         "php": "^8.1",
         "laravel/framework": "^10.11",
-        "thebachtiarz-company/laravel-base-v1": "^1.0.22"
+        "thebachtiarz-company/laravel-base-v1": "^1.0.28"
     },
     "license": "MIT",
     "autoload": {

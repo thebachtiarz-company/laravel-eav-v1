@@ -65,7 +65,14 @@ trait EavMutatorTrait
         } catch (Throwable $th) {
             /** @var LogLibrary @logLibrary */
             $logLibrary = app()->make(LogLibrary::class);
-            $logLibrary->log(logEntity: $th, channel: 'developer');
+            $logLibrary->log(
+                logEntity: $th,
+                channel: match (tbconfig(configName: 'app', keyName: 'env')) {
+                    'local' => 'developer',
+                    'production' => 'production',
+                    default => 'developer'
+                }
+            );
 
             return false;
         }

@@ -12,6 +12,7 @@ use TheBachtiarz\EAV\Traits\Services\EavMutatorTrait;
 
 use function collect;
 use function in_array;
+use function is_null;
 use function tbgetmodelcolumns;
 
 abstract class AbstractRepository extends BaseAbstractRepository implements AbstractRepositoryInterface
@@ -34,7 +35,7 @@ abstract class AbstractRepository extends BaseAbstractRepository implements Abst
      */
     public function withEav(bool|null $withEav = null): static|bool
     {
-        if ($withEav) {
+        if (! is_null($withEav)) {
             $this->withEav = $withEav;
 
             return $this;
