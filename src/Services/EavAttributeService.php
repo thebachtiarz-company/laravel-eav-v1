@@ -54,9 +54,9 @@ trait EavAttributeService
      */
     public function withExtensionAttributes(): static
     {
-        /** @var Model $this */
-
         $extensionAttributes = $this->getExtensionAttributes();
+
+        /** @var Model $this */
 
         foreach ($extensionAttributes->getData() as $attribute => $value) {
             $this->setAttribute($attribute, $value);

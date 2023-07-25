@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 use TheBachtiarz\Base\App\Interfaces\Models\AbstractModelInterface;
 use TheBachtiarz\Base\App\Repositories\AbstractRepository as BaseAbstractRepository;
 use TheBachtiarz\EAV\Interfaces\Repositories\AbstractRepositoryInterface;
+use TheBachtiarz\EAV\Models\AbstractModel;
 use TheBachtiarz\EAV\Traits\Services\EavMutatorTrait;
 
+use function assert;
 use function collect;
 use function in_array;
 use function is_null;
@@ -25,6 +27,30 @@ abstract class AbstractRepository extends BaseAbstractRepository implements Abst
     protected bool $withEav = true;
 
     // ? Public Methods
+
+    public function getById(int $id): Model|AbstractModelInterface|null
+    {
+        $entity = parent::getById($id);
+
+        if ($entity && $this->withEav()) {
+            assert($entity instanceof AbstractModel);
+            $entity->withExtensionAttributes();
+        }
+
+        return $entity;
+    }
+
+    public function createOrUpdate(Model|AbstractModelInterface $model): Model|AbstractModelInterface
+    {
+        $entity = parent::createOrUpdate($model);
+
+        if ($entity && $this->withEav()) {
+            assert($entity instanceof AbstractModel);
+            $entity->fresh()->withExtensionAttributes();
+        }
+
+        return $entity;
+    }
 
     /**
      * Set is result with eav
@@ -74,7 +100,11 @@ abstract class AbstractRepository extends BaseAbstractRepository implements Abst
         }
 
         foreach ($this->modelExtensionAttributes ?? [] as $attribute => $value) {
-            $this->createOrUpdateEav($modelEntity, $attribute, $value);
+            $this->createOrUpdateEav(
+                abstractModelInterface: $modelEntity,
+                attributeName: $attribute,
+                attributeValue: $value,
+            );
         }
     }
 

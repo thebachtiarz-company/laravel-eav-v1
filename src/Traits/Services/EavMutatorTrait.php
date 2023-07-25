@@ -14,6 +14,7 @@ use Throwable;
 
 use function app;
 use function assert;
+use function tbconfig;
 
 /**
  * Eav Mutator Trait
@@ -71,7 +72,7 @@ trait EavMutatorTrait
                     'local' => 'developer',
                     'production' => 'production',
                     default => 'developer'
-                }
+                },
             );
 
             return false;
