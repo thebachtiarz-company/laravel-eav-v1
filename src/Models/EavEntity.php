@@ -28,6 +28,12 @@ class EavEntity extends AbstractModel implements EavEntityInterface
         parent::__construct($attributes);
     }
 
+    // ? Public Methods
+
+    // ? Protected Methods
+
+    // ? Private Methods
+
     // ? Getter Modules
 
     /**

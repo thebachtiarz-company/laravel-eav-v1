@@ -25,6 +25,8 @@ class EntityAttributeValueCollection implements EntityAttributeValueCollectionIn
         $this->_collection = $data;
     }
 
+    // ? Public Methods
+
     /**
      * Get data
      */

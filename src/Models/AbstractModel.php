@@ -22,26 +22,36 @@ abstract class AbstractModel extends BaseAbstractModel
      *
      * @var array
      */
-    protected array $restrictedEavattributes = [];
+    protected array $restrictedAttributes = [];
 
     /**
      * Constructor
      */
     public function __construct(array $attributes = [])
     {
-        $this->restrictedEavattributes = tbgetmodelcolumns($this);
+        $this->restrictedAttributes = tbgetmodelcolumns($this);
 
         parent::__construct($attributes);
     }
+
+    // ? Public Methods
 
     public function setData(string $attribute, mixed $value): static
     {
         $column = Str::slug(title: $attribute, separator: '_');
 
-        if (in_array($column, $this->restrictedEavattributes)) {
+        if (in_array($column, $this->restrictedAttributes)) {
             throw new Exception(sprintf("Attribute '%s' is restricted", $attribute));
         }
 
-        return parent::setData($column, $value);
+        return parent::setData(attribute: $column, value: $value);
     }
+
+    // ? Protected Methods
+
+    // ? Private Methods
+
+    // ? Getter Modules
+
+    // ? Setter Modules
 }
