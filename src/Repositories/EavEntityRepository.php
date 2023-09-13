@@ -31,6 +31,8 @@ class EavEntityRepository extends AbstractRepository
 
     /**
      * Get attributes in model
+     *
+     * @return Collection<EavEntityInterface>
      */
     public function getAttributesModel(AbstractModelInterface $abstractModelInterface): Collection
     {
@@ -41,6 +43,8 @@ class EavEntityRepository extends AbstractRepository
 
     /**
      * Get attributes in entity
+     *
+     * @return Collection<EavEntityInterface>
      */
     public function getAttributesEntity(AbstractModelInterface $abstractModelInterface): Collection
     {
@@ -54,6 +58,8 @@ class EavEntityRepository extends AbstractRepository
 
     /**
      * Search entities by attribute value
+     *
+     * @return Collection<EavEntityInterface>
      */
     public function searchEntityAttribute(
         AbstractModelInterface $abstractModelInterface,

@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use TheBachtiarz\Base\App\Models\AbstractModel as BaseAbstractModel;
 use TheBachtiarz\EAV\Services\EavAttributeService;
 
+use function count;
 use function in_array;
 use function sprintf;
 use function tbgetmodelcolumns;
@@ -29,7 +30,9 @@ abstract class AbstractModel extends BaseAbstractModel
      */
     public function __construct(array $attributes = [])
     {
-        $this->restrictedAttributes = tbgetmodelcolumns($this);
+        if (count($this->restrictedAttributes) < 1) {
+            $this->restrictedAttributes = tbgetmodelcolumns($this);
+        }
 
         parent::__construct($attributes);
     }

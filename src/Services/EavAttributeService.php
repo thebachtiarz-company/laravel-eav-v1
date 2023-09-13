@@ -23,7 +23,10 @@ trait EavAttributeService
 {
     use EavMutatorTrait;
 
-    protected AbstractModelInterface $model;
+    /**
+     * Model Entity
+     */
+    protected AbstractModelInterface|Model $model;
 
     // ? Public Methods
 
@@ -32,6 +35,7 @@ trait EavAttributeService
      */
     public function getExtensionAttributes(): EntityAttributeValueCollectionInterface
     {
+        /** @var AbstractModelInterface|Model $this */
         $this->model = $this;
 
         $eavEntityRepository = app(EavEntityRepository::class);
@@ -73,6 +77,7 @@ trait EavAttributeService
     public function setExtensionAttributes(
         EntityAttributeValueCollectionInterface $entityAttributeValueCollectionInterface,
     ): static {
+        /** @var AbstractModelInterface|Model $this */
         $this->model = $this;
 
         $this->modelExtensionAttributes = $entityAttributeValueCollectionInterface->getData();
@@ -95,6 +100,7 @@ trait EavAttributeService
      */
     public function saveExtensionAttributes(): EntityAttributeValueCollectionInterface
     {
+        /** @var AbstractModelInterface|Model $this */
         $this->model = $this;
 
         if (! collect($this->modelExtensionAttributes)->count()) {
@@ -106,5 +112,33 @@ trait EavAttributeService
         }
 
         return $this->getExtensionAttributes();
+    }
+
+    /**
+     * Delete extension attribute
+     *
+     * @return static
+     */
+    public function deleteEavAttribute(string $attributeName): static
+    {
+        /** @var AbstractModelInterface|Model $this */
+        $this->model = $this;
+
+        $eavEntityRepository = app(EavEntityRepository::class);
+        assert($eavEntityRepository instanceof EavEntityRepository);
+
+        $eavEntity = $eavEntityRepository->getEntityAttributeValue(
+            abstractModelInterface: $this->model,
+            attributeName: $attributeName,
+        );
+        assert($eavEntity instanceof EavEntityInterface || $eavEntity === null);
+
+        if ($eavEntity?->getId()) {
+            $eavEntityRepository->deleteById($eavEntity->getId());
+        }
+
+        $this->model->offsetUnset($attributeName);
+
+        return $this;
     }
 }
