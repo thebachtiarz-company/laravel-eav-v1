@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TheBachtiarz\EAV\Services;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use TheBachtiarz\Base\App\Interfaces\Models\AbstractModelInterface;
 use TheBachtiarz\EAV\Interfaces\Models\Data\EntityAttributeValueCollectionInterface;
@@ -28,22 +29,31 @@ trait EavAttributeService
      */
     protected AbstractModelInterface|Model $model;
 
+    /**
+     * Model EAV Vollection
+     *
+     * @var Collection<EavEntityInterface>|null
+     */
+    private Collection|null $modelEavCollection = null;
+
     // ? Public Methods
 
     /**
      * Get extension attributes
      */
-    public function getExtensionAttributes(): EntityAttributeValueCollectionInterface
+    public function getExtensionAttributes(bool $fresh = false): EntityAttributeValueCollectionInterface
     {
         /** @var AbstractModelInterface|Model $this */
         $this->model = $this;
 
-        $eavEntityRepository = app(EavEntityRepository::class);
-        assert($eavEntityRepository instanceof EavEntityRepository);
+        if (! $this->modelEavCollection || $fresh) {
+            $eavEntityRepository = app(EavEntityRepository::class);
+            assert($eavEntityRepository instanceof EavEntityRepository);
 
-        $entityCollection = $eavEntityRepository->getAttributesEntity($this->model);
+            $this->modelEavCollection = $eavEntityRepository->getAttributesEntity($this->model);
+        }
 
-        foreach ($entityCollection->all() ?? [] as $key => $eavEntity) {
+        foreach ($this->modelEavCollection->all() ?? [] as $key => $eavEntity) {
             assert($eavEntity instanceof EavEntityInterface);
             $this->modelExtensionAttributes[$eavEntity->getAttrName()] = $eavEntity->getAttrValue();
         }
@@ -52,13 +62,13 @@ trait EavAttributeService
     }
 
     /**
-     * Return entity result with extension attributes
+     * Inject current model entity with extension attribute(s)
      *
      * @return static
      */
-    public function withExtensionAttributes(): static
+    public function withExtensionAttributes(bool $fresh = false): static
     {
-        $extensionAttributes = $this->getExtensionAttributes();
+        $extensionAttributes = $this->getExtensionAttributes(fresh: $fresh);
 
         /** @var Model $this */
 
@@ -97,17 +107,25 @@ trait EavAttributeService
 
     /**
      * Create or update extension attributes
+     *
+     * @param array|null $only Save only certain attribute(s)
      */
-    public function saveExtensionAttributes(): EntityAttributeValueCollectionInterface
+    public function saveExtensionAttributes(array|null $only = null): EntityAttributeValueCollectionInterface
     {
         /** @var AbstractModelInterface|Model $this */
         $this->model = $this;
 
-        if (! collect($this->modelExtensionAttributes)->count()) {
+        $modelAttributes = collect($this->modelExtensionAttributes);
+
+        if ($only) {
+            $modelAttributes->only($only);
+        }
+
+        if (! $modelAttributes->count()) {
             return new EntityAttributeValueCollection();
         }
 
-        foreach ($this->modelExtensionAttributes ?? [] as $attribute => $value) {
+        foreach ($modelAttributes->toArray() ?? [] as $attribute => $value) {
             $this->createOrUpdateEav($this->model, $attribute, $value);
         }
 

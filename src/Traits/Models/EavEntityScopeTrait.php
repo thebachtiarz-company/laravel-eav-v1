@@ -21,7 +21,11 @@ trait EavEntityScopeTrait
         EloquentBuilder|QueryBuilder $builder,
         string $entityName,
     ): BuilderContract {
-        return $builder->where(EavEntityInterface::ATTRIBUTE_ENTITY, $entityName);
+        return $builder->where(
+            column: EavEntityInterface::ATTRIBUTE_ENTITY,
+            operator: '=',
+            value: $entityName,
+        );
     }
 
     /**
@@ -31,7 +35,11 @@ trait EavEntityScopeTrait
         EloquentBuilder|QueryBuilder $builder,
         int $entityId,
     ): BuilderContract {
-        return $builder->where(EavEntityInterface::ATTRIBUTE_ENTITYID, $entityId);
+        return $builder->where(
+            column: EavEntityInterface::ATTRIBUTE_ENTITYID,
+            operator: '=',
+            value: $entityId,
+        );
     }
 
     /**
@@ -41,7 +49,11 @@ trait EavEntityScopeTrait
         EloquentBuilder|QueryBuilder $builder,
         string $attributeName,
     ): BuilderContract {
-        return $builder->where(EavEntityInterface::ATTRIBUTE_NAME, $attributeName);
+        return $builder->where(
+            column: EavEntityInterface::ATTRIBUTE_NAME,
+            operator: '=',
+            value: $attributeName,
+        );
     }
 
     /**
@@ -53,8 +65,18 @@ trait EavEntityScopeTrait
         string $attributeName,
         string $attributeValue,
     ): BuilderContract {
-        return $builder->where(EavEntityInterface::ATTRIBUTE_ENTITY, $entityName)
-            ->where(EavEntityInterface::ATTRIBUTE_NAME, $attributeName)
-            ->where(EavEntityInterface::ATTRIBUTE_VALUE, 'like', "%$attributeValue%");
+        return $builder->where(
+            column: EavEntityInterface::ATTRIBUTE_ENTITY,
+            operator: '=',
+            value: $entityName,
+        )->where(
+            column: EavEntityInterface::ATTRIBUTE_NAME,
+            operator: '=',
+            value: $attributeName,
+        )->where(
+            column: EavEntityInterface::ATTRIBUTE_VALUE,
+            operator: 'like',
+            value: "%$attributeValue%",
+        );
     }
 }
