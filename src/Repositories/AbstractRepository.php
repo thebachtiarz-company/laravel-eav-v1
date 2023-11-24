@@ -42,6 +42,10 @@ abstract class AbstractRepository extends BaseAbstractRepository implements Abst
 
     public function createOrUpdate(Model|AbstractModelInterface $model): Model|AbstractModelInterface
     {
+        if ($model->getId()) {
+            $model = $this->saveEavBeforeModelSave($model);
+        }
+
         $entity = parent::createOrUpdate($model);
 
         if ($entity && $this->withEav()) {
